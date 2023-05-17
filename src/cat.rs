@@ -8,29 +8,25 @@ where
     I: IntoIterator<Item = T>,
     T: AsRef<str>,
 {
-    let mut output = String::new();
+    let output: Result<Vec<_>> = files
+        .into_iter()
+        .map(|filepath| {
+            let file = File::open(filepath.as_ref())?;
+            let reader = BufReader::new(file);
 
-    for filepath in files {
-        let file = File::open(filepath.as_ref())?;
-        let reader = BufReader::new(file);
+            let filename = Path::new(filepath.as_ref())
+                .file_name()
+                .ok_or(anyhow::anyhow!("Invalid filename"))?
+                .to_string_lossy();
 
-        let filename = Path::new(filepath.as_ref())
-            .file_name()
-            .ok_or(anyhow::anyhow!("Invalid filename"))?
-            .to_string_lossy();
+            let file_content: Result<Vec<_>, _> = reader.lines().collect();
+            let file_content = file_content?.join("\n");
 
-        output.push_str(&format!("\n```{}\n", filename));
+            Ok(format!("\n```{}\n{}\n```\n", filename, file_content))
+        })
+        .collect();
 
-        for line in reader.lines() {
-            let line = line?;
-            output.push_str(&line);
-            output.push('\n');
-        }
-
-        output.push_str("```\n");
-    }
-
-    Ok(output)
+    Ok(output?.join(""))
 }
 
 #[cfg(test)]
