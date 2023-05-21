@@ -9,25 +9,26 @@ struct Cli {
     #[arg(required = true)]
     files: Vec<PathBuf>,
 
-    /// Output to stdout
-    #[arg(long)]
-    stdout: bool,
+    /// Copy to clipboard
+    #[arg(long, short)]
+    clipboard: bool,
+    // 開発終わったら stdout をオプションにして clipboard の方をデフォルトにしてもいいかも
+    ///// Output to stdout
+    // #[arg(long)]
+    // stdout: bool,
 }
 
 fn main() {
     let cli = Cli::parse();
 
-    let text = match cat::cat_files(cli.files) {
-        Ok(text) => text,
-        Err(e) => {
-            eprintln!("Error: {}", e);
-            process::exit(1);
-        }
-    };
+    let text = cat::cat_files(cli.files).unwrap_or_else(|e| {
+        eprintln!("Error: {}", e);
+        process::exit(1);
+    });
 
-    if cli.stdout {
-        println!("{}", text);
-    } else {
+    if cli.clipboard {
         clipboard::copy(&text).unwrap();
+    } else {
+        println!("{}", text);
     }
 }
