@@ -27,7 +27,13 @@ fn main() {
     });
 
     if cli.clipboard {
-        clipboard::copy(&text).unwrap();
+        match clipboard::copy(&text) {
+            Ok(_) => println!("Copied to clipboard!"),
+            Err(e) => {
+                eprintln!("Error: {}", e);
+                process::exit(1);
+            }
+        }
     } else {
         println!("{}", text);
     }
