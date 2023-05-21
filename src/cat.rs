@@ -6,7 +6,7 @@ use std::path::Path;
 pub fn cat_files<I, T>(files: I) -> Result<String>
 where
     I: IntoIterator<Item = T>,
-    T: AsRef<str>,
+    T: AsRef<Path>,
 {
     let output: Result<Vec<_>> = files
         .into_iter()
