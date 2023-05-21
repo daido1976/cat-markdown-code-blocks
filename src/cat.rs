@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::Path;
 
-fn cat_files<I, T>(files: I) -> Result<String>
+pub fn cat_files<I, T>(files: I) -> Result<String>
 where
     I: IntoIterator<Item = T>,
     T: AsRef<str>,
