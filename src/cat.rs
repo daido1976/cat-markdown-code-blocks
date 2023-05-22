@@ -1,6 +1,6 @@
+use crate::formatter::format_like_markdown;
+use crate::reader::read_files;
 use anyhow::Result;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
 use std::path::Path;
 
 pub fn cat_files<I, T>(files: I) -> Result<String>
@@ -8,25 +8,8 @@ where
     I: IntoIterator<Item = T>,
     T: AsRef<Path>,
 {
-    let output: Result<Vec<_>> = files
-        .into_iter()
-        .map(|filepath| {
-            let file = File::open(filepath.as_ref())?;
-            let reader = BufReader::new(file);
-
-            let filename = Path::new(filepath.as_ref())
-                .file_name()
-                .ok_or(anyhow::anyhow!("Invalid filename"))?
-                .to_string_lossy();
-
-            let file_content: Result<Vec<_>, _> = reader.lines().collect();
-            let file_content = file_content?.join("\n");
-
-            Ok(format!("\n```{}\n{}\n```\n", filename, file_content))
-        })
-        .collect();
-
-    Ok(output?.join(""))
+    let file_content_with_filenames = read_files(files)?;
+    Ok(format_like_markdown(file_content_with_filenames))
 }
 
 #[cfg(test)]
@@ -45,7 +28,7 @@ mod tests {
 
         // Write files.
         write(&file_path1, "Hello,")?;
-        write(&file_path2, "world!")?;
+        write(&file_path2, "world\n!")?;
 
         // Call our function.
         let result = cat_files(vec![
@@ -60,7 +43,8 @@ Hello,
 ```
 
 ```file2.txt
-world!
+world
+!
 ```
 "#
         .to_string();
