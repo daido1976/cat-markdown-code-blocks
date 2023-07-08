@@ -1,5 +1,5 @@
-use cat_markdown::{cat, clipboard};
 use clap::Parser;
+use core::{cat, clipboard};
 use std::{path::PathBuf, process};
 
 #[derive(Parser, Debug)]
