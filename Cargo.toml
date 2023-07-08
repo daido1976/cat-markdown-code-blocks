@@ -1,5 +1,5 @@
 [workspace]
 members = [
-  "core",
+  "shared", # NOTE: `core` という命名にしたかったが、rust-analyzer がテストの認識をしてくれないのでこの名前にしている
   "cli",
 ]

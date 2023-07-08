@@ -1,5 +1,5 @@
 use clap::Parser;
-use core::{cat, clipboard};
+use shared::{cat, clipboard};
 use std::{path::PathBuf, process};
 
 #[derive(Parser, Debug)]
