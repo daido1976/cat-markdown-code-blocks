@@ -1,5 +1,5 @@
-use crate::FileContentWithFileName;
 use anyhow::{Ok, Result};
+use shared::FileContentWithFileName;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::Path;

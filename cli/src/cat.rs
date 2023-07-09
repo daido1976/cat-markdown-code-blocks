@@ -1,6 +1,6 @@
-use crate::formatter::format_like_markdown;
 use crate::reader::read_files;
 use anyhow::Result;
+use shared::formatter::format_like_markdown;
 use std::path::Path;
 
 pub fn cat_files<I, T>(files: I) -> Result<String>

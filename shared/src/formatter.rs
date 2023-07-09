@@ -1,6 +1,5 @@
 use crate::FileContentWithFileName;
 
-// TODO: wasm でタプルが使えるか調べる
 pub fn format_like_markdown(file_content_with_filenames: Vec<FileContentWithFileName>) -> String {
     file_content_with_filenames
         .into_iter()
