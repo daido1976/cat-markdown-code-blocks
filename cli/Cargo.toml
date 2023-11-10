@@ -11,3 +11,4 @@ arboard = "3.2.0"
 clap = {version = "4.3.0", features = ["derive"]}
 shared = {path = "../shared"}
 tempfile = "3.5.0"
+walkdir = "2.4.0"
