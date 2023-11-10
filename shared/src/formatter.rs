@@ -1,4 +1,6 @@
-use crate::FileContentWithFileName;
+type FileName = String;
+type FileContent = String;
+pub type FileContentWithFileName = (FileName, FileContent);
 
 pub fn format_like_markdown(file_content_with_filenames: Vec<FileContentWithFileName>) -> String {
     file_content_with_filenames

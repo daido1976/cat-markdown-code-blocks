@@ -1,5 +1,5 @@
 use serde_wasm_bindgen::{from_value, to_value};
-use shared::{formatter::format_like_markdown, FileContentWithFileName};
+use shared::formatter::{format_like_markdown, FileContentWithFileName};
 use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
 
 #[wasm_bindgen]

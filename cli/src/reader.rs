@@ -1,5 +1,5 @@
 use anyhow::{Ok, Result};
-use shared::FileContentWithFileName;
+use shared::formatter::FileContentWithFileName;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::Path;
