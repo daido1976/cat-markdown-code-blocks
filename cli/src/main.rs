@@ -1,5 +1,9 @@
+use anyhow::Result;
 use clap::Parser;
-use cli::{cat, clipboard};
+use cli::clipboard;
+use cli::reader::read_files;
+use shared::formatter::format_like_markdown;
+use std::path::Path;
 use std::{path::PathBuf, process};
 
 #[derive(Parser, Debug)]
@@ -12,7 +16,7 @@ struct Cli {
     /// Copy to clipboard
     #[arg(long, short)]
     clipboard: bool,
-    // 開発終わったら stdout をオプションにして clipboard の方をデフォルトにしてもいいかも
+    // TODO: 開発終わったら stdout をオプションにして clipboard の方をデフォルトにしてもいいかも
     ///// Output to stdout
     // #[arg(long)]
     // stdout: bool,
@@ -21,7 +25,7 @@ struct Cli {
 fn main() {
     let cli = Cli::parse();
 
-    let text = cat::cat_files(cli.files).unwrap_or_else(|e| {
+    let text = cat(cli.files).unwrap_or_else(|e| {
         eprintln!("Error: {}", e);
         process::exit(1);
     });
@@ -36,5 +40,61 @@ fn main() {
         }
     } else {
         println!("{}", text);
+    }
+}
+
+// TODO: 開発が落ち着いたら別ファイルに移動してもいいかも
+fn cat<I, T>(files: I) -> Result<String>
+where
+    I: IntoIterator<Item = T>,
+    T: AsRef<Path>,
+{
+    let file_content_with_filenames = read_files(files)?;
+    Ok(format_like_markdown(file_content_with_filenames))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs::write;
+    use tempfile::tempdir;
+
+    #[test]
+    fn test_cat() -> Result<()> {
+        // Create a temporary directory.
+        let dir = tempdir()?;
+
+        let file_path1 = dir.path().join("file1.txt");
+        let file_path2 = dir.path().join("file2.txt");
+
+        // Write files.
+        write(&file_path1, "Hello,")?;
+        write(&file_path2, "world\n!")?;
+
+        // Call our function.
+        let result = cat(vec![
+            file_path1.to_str().unwrap(),
+            file_path2.to_str().unwrap(),
+        ])?;
+
+        // Check the file content.
+        let expected = r#"
+```file1.txt
+Hello,
+```
+
+```file2.txt
+world
+!
+```
+"#
+        .to_string();
+
+        assert_eq!(expected, result);
+
+        // Delete the directory and its content.
+        dir.close()?;
+
+        Ok(())
     }
 }
