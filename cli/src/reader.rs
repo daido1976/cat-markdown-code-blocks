@@ -1,11 +1,11 @@
 use anyhow::{Ok, Result};
-use shared::formatter::MarkdownFile;
+use shared::formatter::MarkdownCodeBlock;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::Path;
 use walkdir::WalkDir;
 
-pub fn read_files<I, T>(files: I) -> Result<Vec<MarkdownFile>>
+pub fn read_files<I, T>(files: I) -> Result<Vec<MarkdownCodeBlock>>
 where
     I: IntoIterator<Item = T>,
     T: AsRef<Path>,
@@ -40,11 +40,11 @@ fn is_file(entry: &walkdir::DirEntry) -> bool {
     entry.file_type().is_file()
 }
 
-fn read_single_file(path: &Path) -> Result<MarkdownFile> {
+fn read_single_file(path: &Path) -> Result<MarkdownCodeBlock> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
 
-    let filename = path
+    let file_name = path
         .file_name()
         .ok_or(anyhow::anyhow!("Invalid filename"))?
         .to_string_lossy();
@@ -52,7 +52,7 @@ fn read_single_file(path: &Path) -> Result<MarkdownFile> {
     let file_content: Result<Vec<_>, _> = reader.lines().collect();
     let file_content = file_content?.join("\n");
 
-    Ok(MarkdownFile::new(filename.to_string(), file_content))
+    Ok(MarkdownCodeBlock::new(file_name.to_string(), file_content))
 }
 
 #[cfg(test)]
@@ -83,8 +83,8 @@ mod tests {
 
         // Check the file content.
         let expected = vec![
-            MarkdownFile::new("file1.txt".to_string(), "Hello,".to_string()),
-            MarkdownFile::new("file2.txt".to_string(), "world\n!".to_string()),
+            MarkdownCodeBlock::new("file1.txt".to_string(), "Hello,".to_string()),
+            MarkdownCodeBlock::new("file2.txt".to_string(), "world\n!".to_string()),
         ];
         assert_eq!(expected, result);
 
@@ -114,12 +114,12 @@ mod tests {
 
         // Sort results as file order is not guaranteed
         let mut result_sorted = result.clone();
-        result_sorted.sort_by(|a, b| a.name().cmp(&b.name()));
+        result_sorted.sort_by(|a, b| a.file_name().cmp(&b.file_name()));
 
         // Check the file content.
         let expected = vec![
-            MarkdownFile::new("file1.txt".to_string(), "Hello,".to_string()),
-            MarkdownFile::new("file2.txt".to_string(), "world\n!".to_string()),
+            MarkdownCodeBlock::new("file1.txt".to_string(), "Hello,".to_string()),
+            MarkdownCodeBlock::new("file2.txt".to_string(), "world\n!".to_string()),
         ];
         assert_eq!(expected, result_sorted);
 

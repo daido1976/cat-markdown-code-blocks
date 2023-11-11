@@ -49,8 +49,8 @@ where
     I: IntoIterator<Item = T>,
     T: AsRef<Path>,
 {
-    let markdown_files = read_files(files)?;
-    Ok(format(markdown_files))
+    let code_blocks = read_files(files)?;
+    Ok(format(code_blocks))
 }
 
 #[cfg(test)]

@@ -1,18 +1,18 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
-pub struct MarkdownFile {
-    name: String,
+pub struct MarkdownCodeBlock {
+    file_name: String,
     content: String,
 }
 
-impl MarkdownFile {
-    pub fn new(name: String, content: String) -> Self {
-        Self { name, content }
+impl MarkdownCodeBlock {
+    pub fn new(file_name: String, content: String) -> Self {
+        Self { file_name, content }
     }
 
-    pub fn name(&self) -> &str {
-        &self.name
+    pub fn file_name(&self) -> &str {
+        &self.file_name
     }
 
     pub fn content(&self) -> &str {
@@ -20,12 +20,12 @@ impl MarkdownFile {
     }
 
     fn format(&self) -> String {
-        format!("\n```{}\n{}\n```\n", self.name, self.content)
+        format!("\n```{}\n{}\n```\n", self.file_name, self.content)
     }
 }
 
-pub fn format(markdown_files: Vec<MarkdownFile>) -> String {
-    markdown_files.into_iter().map(|m| m.format()).collect()
+pub fn format(code_blocks: Vec<MarkdownCodeBlock>) -> String {
+    code_blocks.into_iter().map(|m| m.format()).collect()
 }
 
 #[cfg(test)]
@@ -33,10 +33,10 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_format_like_markdown() {
+    fn test_format() {
         let result = format(vec![
-            MarkdownFile::new("file1.txt".to_string(), "Hello,".to_string()),
-            MarkdownFile::new("file2.txt".to_string(), "world\n!".to_string()),
+            MarkdownCodeBlock::new("file1.txt".to_string(), "Hello,".to_string()),
+            MarkdownCodeBlock::new("file2.txt".to_string(), "world\n!".to_string()),
         ]);
 
         // Check the file content.
