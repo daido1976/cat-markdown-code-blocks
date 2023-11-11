@@ -12,3 +12,7 @@ clap = {version = "4.3.0", features = ["derive"]}
 shared = {path = "../shared"}
 tempfile = "3.5.0"
 walkdir = "2.4.0"
+
+[[bin]]
+name = "cmcb" # An abbreviation for "cat-markdown-code-blocks"
+path = "src/main.rs"
