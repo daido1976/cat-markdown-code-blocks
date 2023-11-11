@@ -44,5 +44,8 @@ const extensionConfig = {
   infrastructureLogging: {
     level: "log", // enables logging required for problem matchers
   },
+  experiments: {
+    asyncWebAssembly: true,
+  },
 };
 module.exports = [extensionConfig];
