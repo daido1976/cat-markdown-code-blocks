@@ -1,1 +1,3 @@
-[WIP] Concatenate the code in a markdown-like format for ChatGPT.
+# [WIP] cat-markdown-code-blocks
+
+Concatenate the code blocks in a markdown-like format for ChatGPT.
