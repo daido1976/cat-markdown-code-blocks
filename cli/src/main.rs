@@ -2,7 +2,7 @@ use anyhow::Result;
 use clap::Parser;
 use cli::clipboard;
 use cli::reader::read_files;
-use shared::formatter::format_like_markdown;
+use shared::formatter::format;
 use std::path::Path;
 use std::{path::PathBuf, process};
 
@@ -49,8 +49,8 @@ where
     I: IntoIterator<Item = T>,
     T: AsRef<Path>,
 {
-    let file_content_with_filenames = read_files(files)?;
-    Ok(format_like_markdown(file_content_with_filenames))
+    let markdown_files = read_files(files)?;
+    Ok(format(markdown_files))
 }
 
 #[cfg(test)]
