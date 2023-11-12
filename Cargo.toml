@@ -4,3 +4,4 @@ members = [
   "cli",
   "wasm",
 ]
+resolver = "2"
