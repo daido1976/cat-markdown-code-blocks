@@ -1,5 +1,5 @@
 use anyhow::{Ok, Result};
-use cmcb_shared::formatter::MarkdownCodeBlock;
+use cmcb_core::formatter::MarkdownCodeBlock;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::Path;

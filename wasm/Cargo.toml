@@ -4,7 +4,7 @@ name = "cmcb-wasm"
 version = "0.1.0"
 
 [dependencies]
-cmcb-shared = {path = "../shared"}
+cmcb-core = {path = "../core"}
 serde-wasm-bindgen = "0.5.0"
 wasm-bindgen = "0.2.87"
 

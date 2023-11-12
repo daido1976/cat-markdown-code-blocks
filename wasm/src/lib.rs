@@ -1,4 +1,4 @@
-use cmcb_shared::formatter::{format, MarkdownCodeBlock};
+use cmcb_core::formatter::{format, MarkdownCodeBlock};
 use serde_wasm_bindgen::{from_value, to_value};
 use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
 

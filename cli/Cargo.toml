@@ -9,7 +9,7 @@ version = "0.1.0"
 anyhow = "1.0.71"
 arboard = "3.2.0"
 clap = {version = "4.3.0", features = ["derive"]}
-cmcb-shared = {path = "../shared"}
+cmcb-core = {path = "../core"}
 tempfile = "3.5.0"
 walkdir = "2.4.0"
 
