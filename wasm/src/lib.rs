@@ -1,5 +1,5 @@
+use cmcb_shared::formatter::{format, MarkdownCodeBlock};
 use serde_wasm_bindgen::{from_value, to_value};
-use shared::formatter::{format, MarkdownCodeBlock};
 use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
 
 // TODO: ts 側で型が format_wasm(data: any): any; になってしまうので、型が付くようにしたい

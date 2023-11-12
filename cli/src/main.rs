@@ -1,8 +1,8 @@
 use anyhow::Result;
 use clap::Parser;
-use cli::clipboard;
-use cli::reader::read_files;
-use shared::formatter::format;
+use cmcb_cli::clipboard;
+use cmcb_cli::reader::read_files;
+use cmcb_shared::formatter::format;
 use std::path::Path;
 use std::{path::PathBuf, process};
 
