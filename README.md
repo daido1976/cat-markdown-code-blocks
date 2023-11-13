@@ -6,7 +6,20 @@
 
 ## Installation
 
-To install `cat-markdown-code-blocks` locally, first clone the project to your local machine and navigate to the root directory of the project. Then run the following command:
+There are two ways to install `cat-markdown-code-blocks`:
+
+### From GitHub
+
+To install directly from the GitHub repository, use the following command:
+
+```sh
+# Install only cmcb-cli package
+$ cargo install --git https://github.com/your-username/cat-markdown-code-blocks.git
+```
+
+### From Local
+
+For development purposes, clone the project to your local machine, navigate to the root directory of the project, and then run the following command:
 
 ```sh
 $ cargo install --path ./cli
