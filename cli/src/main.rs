@@ -1,9 +1,5 @@
-use anyhow::Result;
 use clap::Parser;
-use cmcb_cli::clipboard;
-use cmcb_cli::reader::read_files;
-use cmcb_core::formatter::format;
-use std::path::Path;
+use cmcb_cli::{cat, clipboard};
 use std::{path::PathBuf, process};
 
 #[derive(Parser, Debug)]
@@ -25,7 +21,7 @@ struct Cli {
 fn main() {
     let cli = Cli::parse();
 
-    let text = cat(cli.file_paths).unwrap_or_else(|e| {
+    let text = cat::cat_markdown_code_block(cli.file_paths).unwrap_or_else(|e| {
         eprintln!("Error: {}", e);
         process::exit(1);
     });
@@ -40,61 +36,5 @@ fn main() {
         }
     } else {
         println!("{}", text);
-    }
-}
-
-// TODO: 開発が落ち着いたら別ファイルに移動してもいいかも
-fn cat<I, T>(paths: I) -> Result<String>
-where
-    I: IntoIterator<Item = T>,
-    T: AsRef<Path>,
-{
-    let code_blocks = read_files(paths)?;
-    Ok(format(code_blocks))
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::fs::write;
-    use tempfile::tempdir;
-
-    #[test]
-    fn test_cat() -> Result<()> {
-        // Create a temporary directory.
-        let dir = tempdir()?;
-
-        let file_path1 = dir.path().join("file1.txt");
-        let file_path2 = dir.path().join("file2.txt");
-
-        // Write files.
-        write(&file_path1, "Hello,")?;
-        write(&file_path2, "world\n!")?;
-
-        // Call our function.
-        let result = cat(vec![
-            file_path1.to_str().unwrap(),
-            file_path2.to_str().unwrap(),
-        ])?;
-
-        // Check the file content.
-        let expected = r#"
-```file1.txt
-Hello,
-```
-
-```file2.txt
-world
-!
-```
-"#
-        .to_string();
-
-        assert_eq!(expected, result);
-
-        // Delete the directory and its content.
-        dir.close()?;
-
-        Ok(())
     }
 }
