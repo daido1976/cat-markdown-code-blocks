@@ -1,4 +1,6 @@
-use crate::reader::read_files;
+mod reader;
+
+use self::reader::read_files;
 use anyhow::Result;
 use cmcb_core::formatter::format;
 use std::path::Path;
