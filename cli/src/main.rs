@@ -12,10 +12,6 @@ struct Cli {
     /// Copy to clipboard
     #[arg(long, short)]
     clipboard: bool,
-    // TODO: 開発終わったら stdout をオプションにして clipboard の方をデフォルトにしてもいいかも
-    ///// Output to stdout
-    // #[arg(long)]
-    // stdout: bool,
 }
 
 fn main() {
