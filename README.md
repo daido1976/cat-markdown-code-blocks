@@ -14,10 +14,10 @@ $ cargo install --path ./cli
 
 ```sh
 $ cmcb -h
-Usage: cmcb [OPTIONS] <FILES>...
+Usage: cmcb [OPTIONS] <FILE_PATHS>...
 
 Arguments:
-  <FILES>...  Input files
+  <FILE_PATHS>...  Input file or directory paths
 
 Options:
   -c, --clipboard  Copy to clipboard

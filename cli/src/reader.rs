@@ -5,12 +5,12 @@ use std::io::{BufRead, BufReader};
 use std::path::Path;
 use walkdir::WalkDir;
 
-pub fn read_files<I, T>(files: I) -> Result<Vec<MarkdownCodeBlock>>
+pub fn read_files<I, T>(paths: I) -> Result<Vec<MarkdownCodeBlock>>
 where
     I: IntoIterator<Item = T>,
     T: AsRef<Path>,
 {
-    files
+    paths
         .into_iter()
         .flat_map(|path| {
             let path_ref = path.as_ref();

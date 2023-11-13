@@ -9,9 +9,9 @@ use std::{path::PathBuf, process};
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Cli {
-    /// Input files
+    /// Input file or directory paths
     #[arg(required = true)]
-    files: Vec<PathBuf>,
+    file_paths: Vec<PathBuf>,
 
     /// Copy to clipboard
     #[arg(long, short)]
@@ -25,7 +25,7 @@ struct Cli {
 fn main() {
     let cli = Cli::parse();
 
-    let text = cat(cli.files).unwrap_or_else(|e| {
+    let text = cat(cli.file_paths).unwrap_or_else(|e| {
         eprintln!("Error: {}", e);
         process::exit(1);
     });
@@ -44,12 +44,12 @@ fn main() {
 }
 
 // TODO: 開発が落ち着いたら別ファイルに移動してもいいかも
-fn cat<I, T>(files: I) -> Result<String>
+fn cat<I, T>(paths: I) -> Result<String>
 where
     I: IntoIterator<Item = T>,
     T: AsRef<Path>,
 {
-    let code_blocks = read_files(files)?;
+    let code_blocks = read_files(paths)?;
     Ok(format(code_blocks))
 }
 
