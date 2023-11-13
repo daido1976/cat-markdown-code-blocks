@@ -2,6 +2,8 @@
 
 `cat-markdown-code-blocks` is a CLI tool that reads multiple files and concatenates their contents into Markdown-formatted code blocks. This tool is particularly useful for systems like ChatGPT, assisting in the quick sharing and documentation of file contents.
 
+**Note**: A VSCode extension for `cat-markdown-code-blocks` is currently in development, but it is still a work in progress.
+
 ## Installation
 
 To install `cat-markdown-code-blocks` locally, first clone the project to your local machine and navigate to the root directory of the project. Then run the following command:
