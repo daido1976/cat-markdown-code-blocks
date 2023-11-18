@@ -48,9 +48,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       val: ${{ steps.plan.outputs.manifest }}
-      tag: ${{ !github.event.pull_request && github.ref_name || '' }}
-      tag-flag: ${{ !github.event.pull_request && format('--tag={0}', github.ref_name) || '' }}
-      publishing: ${{ !github.event.pull_request }}
+      tag: ${{ true && github.ref_name || '' }}
+      tag-flag: ${{ true && format('--tag={0}', github.ref_name) || '' }}
+      publishing: ${{ true }}
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -61,7 +61,7 @@ jobs:
         run: "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.4.3/cargo-dist-installer.sh | sh"
       - id: plan
         run: |
-          cargo dist plan ${{ !github.event.pull_request && format('--tag={0}', github.ref_name) || '' }} --output-format=json > dist-manifest.json
+          cargo dist plan ${{ true && format('--tag={0}', github.ref_name) || '' }} --output-format=json > dist-manifest.json
           echo "cargo dist plan ran successfully"
           cat dist-manifest.json
           echo "manifest=$(jq -c "." dist-manifest.json)" >> "$GITHUB_OUTPUT"
