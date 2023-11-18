@@ -10,12 +10,16 @@ resolver = "2"
 [workspace.metadata.dist]
 # The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
 cargo-dist-version = "0.4.3"
-# The installers to generate for each app
-installers = []
 # Target platforms to build apps for (Rust target-triple syntax)
 targets = ["x86_64-unknown-linux-gnu", "aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-pc-windows-msvc"]
 # CI backends to support
 ci = ["github"]
+# The installers to generate for each app
+installers = ["homebrew"]
+# A GitHub repo to push Homebrew formulas to
+tap = "daido1976/homebrew-tap"
+# Publish jobs to run in CI
+publish-jobs = ["homebrew"]
 # Publish jobs to run in CI
 pr-run-mode = "upload"
 
