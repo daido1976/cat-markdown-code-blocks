@@ -114,7 +114,7 @@ mod tests {
 
         // Sort results as file order is not guaranteed
         let mut result_sorted = result.clone();
-        result_sorted.sort_by(|a, b| a.file_name().cmp(&b.file_name()));
+        result_sorted.sort_by(|a, b| a.file_name().cmp(b.file_name()));
 
         // Check the file content.
         let expected = vec![
