@@ -14,7 +14,7 @@ To install directly from the GitHub repository, use the following command:
 
 ```sh
 # Install only cmcb-cli package
-$ cargo install --git https://github.com/your-username/cat-markdown-code-blocks.git
+$ cargo install --git https://github.com/daido1976/cat-markdown-code-blocks.git
 ```
 
 ### From Local
